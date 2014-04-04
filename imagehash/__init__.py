@@ -61,8 +61,10 @@ class ImageHash(object):
 		return repr(self.hash)
 
 	def __sub__(self, other):
-		assert other is not None, ('Other hash must not be None!')
-		assert self.hash.shape == other.hash.shape, ('ImageHashes must be of the same shape!', self.hash.shape, other.hash.shape)
+		if other is None:
+			raise TypeError('Other hash must not be None.')
+		if self.hash.shape != other.hash.shape:
+			raise TypeError('ImageHashes must be of the same shape.', self.hash.shape, other.hash.shape)
 		return (self.hash != other.hash).sum()
 
 	def __eq__(self, other):
