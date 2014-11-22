@@ -83,8 +83,8 @@ class ImageHash(object):
 def hex_to_hash(hexstr):
 	l = []
 	if len(hexstr) != 16:
-		print(hexstr)
-	for i in range(len(hexstr) / 2):
+		raise ValueError('The hex string has the wrong length')
+	for i in range(8):
 		#for h in hexstr[::2]:
 		h = hexstr[i*2:i*2+2]
 		v = int("0x" + h, 16)
