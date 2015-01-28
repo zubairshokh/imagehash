@@ -88,8 +88,7 @@ def hex_to_hash(hexstr):
 		#for h in hexstr[::2]:
 		h = hexstr[i*2:i*2+2]
 		v = int("0x" + h, 16)
-		for i in range(8):
-			l.append(v & 2**i > 0)
+		l.append([v & 2**i > 0 for i in range(8)])
 	return ImageHash(numpy.array(l))
 
 
