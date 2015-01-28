@@ -85,7 +85,6 @@ def hex_to_hash(hexstr):
 	if len(hexstr) != 16:
 		raise ValueError('The hex string has the wrong length')
 	for i in range(8):
-		#for h in hexstr[::2]:
 		h = hexstr[i*2:i*2+2]
 		v = int("0x" + h, 16)
 		l.append([v & 2**i > 0 for i in range(8)])
@@ -139,5 +138,5 @@ def dhash(image, hash_size=8):
 
 
 
-__dir__ = [average_hash, phash, ImageHash]
+__dir__ = [average_hash, dhash, phash, ImageHash]
 
