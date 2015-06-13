@@ -110,11 +110,11 @@ Implementation follows http://www.hackerfactor.com/blog/index.php?/archives/432-
 
 @image must be a PIL instance.
 """
-def phash(image, hash_size=32):
+def phash(image, hash_size=8):
 	image = image.convert("L").resize((hash_size, hash_size), Image.ANTIALIAS)
 	pixels = numpy.array(image.getdata(), dtype=numpy.float).reshape((hash_size, hash_size))
 	dct = scipy.fftpack.dct(scipy.fftpack.dct(pixels, axis=0), axis=1)
-	dctlowfreq = dct[:int(hash_size/4), :int(hash_size/4)]
+	dctlowfreq = dct[:hash_size, :hash_size]
 	med = numpy.median(dctlowfreq)
 	diff = dctlowfreq > med
 	return ImageHash(diff)
@@ -126,11 +126,11 @@ Implementation follows http://www.hackerfactor.com/blog/index.php?/archives/432-
 
 @image must be a PIL instance.
 """
-def phash_simple(image, hash_size=32):
+def phash_simple(image, hash_size=8):
 	image = image.convert("L").resize((hash_size, hash_size), Image.ANTIALIAS)
 	pixels = numpy.array(image.getdata(), dtype=numpy.float).reshape((hash_size, hash_size))
 	dct = scipy.fftpack.dct(pixels)
-	dctlowfreq = dct[:8, 1:9]
+	dctlowfreq = dct[:hash_size, 1:hash_size+1]
 	avg = dctlowfreq.mean()
 	diff = dctlowfreq > avg
 	return ImageHash(diff)
