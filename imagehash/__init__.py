@@ -4,7 +4,7 @@ Image hashing library
 
 Example:
 
->>> import Image # or: # from PIL import Image
+>>> from PIL import Image
 >>> import imagehash
 >>> hash = imagehash.average_hash(Image.open('test.png'))
 >>> print(hash)
@@ -34,7 +34,7 @@ from PIL import Image
 import numpy
 import scipy.fftpack
 
-def binary_array_to_hex(arr):
+def _binary_array_to_hex(arr):
 	h = 0
 	s = []
 	for i,v in enumerate(arr.flatten()):
@@ -44,9 +44,6 @@ def binary_array_to_hex(arr):
 			h = 0
 	return "".join(s)
 
-def binary_array_to_int(arr):
-	return sum([2**(i % 8) for i,v in enumerate(arr.flatten()) if v])
-
 """
 Hash encapsulation. Can be used for dictionary keys and comparisons.
 """
@@ -55,7 +52,7 @@ class ImageHash(object):
 		self.hash = binary_array
 
 	def __str__(self):
-		return binary_array_to_hex(self.hash)
+		return _binary_array_to_hex(self.hash)
 
 	def __repr__(self):
 		return repr(self.hash)
@@ -78,7 +75,7 @@ class ImageHash(object):
 		return not numpy.array_equal(self.hash, other.hash)
 
 	def __hash__(self):
-		return binary_array_to_int(self.hash)
+		return sum([2**(i % 8) for i,v in enumerate(self.hash.flatten()) if v])
 
 def hex_to_hash(hexstr):
 	l = []
@@ -153,6 +150,4 @@ def dhash(image, hash_size=8):
 	return ImageHash(diff)
 
 
-
-__dir__ = [average_hash, dhash, phash, ImageHash]
 
