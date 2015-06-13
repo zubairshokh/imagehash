@@ -4,7 +4,7 @@ Image hashing library
 
 Example:
 
->>> import Image
+>>> import Image # or: # from PIL import Image
 >>> import imagehash
 >>> hash = imagehash.average_hash(Image.open('test.png'))
 >>> print(hash)
