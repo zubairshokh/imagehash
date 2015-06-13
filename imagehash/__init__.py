@@ -52,7 +52,7 @@ class ImageHash(object):
 		self.hash = binary_array
 
 	def __str__(self):
-		return _binary_array_to_hex(self.hash)
+		return _binary_array_to_hex(self.hash.flatten())
 
 	def __repr__(self):
 		return repr(self.hash)
@@ -60,23 +60,27 @@ class ImageHash(object):
 	def __sub__(self, other):
 		if other is None:
 			raise TypeError('Other hash must not be None.')
-		if self.hash.shape != other.hash.shape:
+		if self.hash.size != other.hash.size:
 			raise TypeError('ImageHashes must be of the same shape.', self.hash.shape, other.hash.shape)
-		return (self.hash != other.hash).sum()
+		return (self.hash.flatten() != other.hash.flatten()).sum()
 
 	def __eq__(self, other):
 		if other is None:
 			return False
-		return numpy.array_equal(self.hash, other.hash)
+		return numpy.array_equal(self.hash.flatten(), other.hash.flatten())
 
 	def __ne__(self, other):
 		if other is None:
 			return False
-		return not numpy.array_equal(self.hash, other.hash)
+		return not numpy.array_equal(self.hash.flatten(), other.hash.flatten())
 
 	def __hash__(self):
+		# this returns a 8 bit integer, intentionally shortening the information
 		return sum([2**(i % 8) for i,v in enumerate(self.hash.flatten()) if v])
-
+"""
+Convert a stored hash (hex, as retrieved from str(Imagehash))
+back to a Imagehash object.
+"""
 def hex_to_hash(hexstr):
 	l = []
 	if len(hexstr) != 16:
