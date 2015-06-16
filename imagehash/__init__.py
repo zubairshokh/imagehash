@@ -112,7 +112,7 @@ def average_hash(image, hash_size=8):
 	# make a hash
 	return ImageHash(diff)
 
-def phash(image, hash_size=8):
+def phash(image, hash_size=8, highfreq_factor=4):
 	"""
 	Perceptual Hash computation.
 
@@ -120,15 +120,16 @@ def phash(image, hash_size=8):
 
 	@image must be a PIL instance.
 	"""
-	image = image.convert("L").resize((hash_size, hash_size), Image.ANTIALIAS)
-	pixels = numpy.array(image.getdata(), dtype=numpy.float).reshape((hash_size, hash_size))
+	img_size = hash_size * highfreq_factor
+	image = image.convert("L").resize((img_size, img_size), Image.ANTIALIAS)
+	pixels = numpy.array(image.getdata(), dtype=numpy.float).reshape((img_size, img_size))
 	dct = scipy.fftpack.dct(scipy.fftpack.dct(pixels, axis=0), axis=1)
 	dctlowfreq = dct[:hash_size, :hash_size]
 	med = numpy.median(dctlowfreq)
 	diff = dctlowfreq > med
 	return ImageHash(diff)
 
-def phash_simple(image, hash_size=8):
+def phash_simple(image, hash_size=8, highfreq_factor=4):
 	"""
 	Perceptual Hash computation.
 
@@ -136,8 +137,9 @@ def phash_simple(image, hash_size=8):
 
 	@image must be a PIL instance.
 	"""
-	image = image.convert("L").resize((hash_size, hash_size), Image.ANTIALIAS)
-	pixels = numpy.array(image.getdata(), dtype=numpy.float).reshape((hash_size, hash_size))
+	img_size = hash_size * highfreq_factor
+	image = image.convert("L").resize((img_size, img_size), Image.ANTIALIAS)
+	pixels = numpy.array(image.getdata(), dtype=numpy.float).reshape((img_size, img_size))
 	dct = scipy.fftpack.dct(pixels)
 	dctlowfreq = dct[:hash_size, 1:hash_size+1]
 	avg = dctlowfreq.mean()
