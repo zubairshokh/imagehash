@@ -202,7 +202,7 @@ def whash(image, hash_size = 8, image_scale = None, mode = 'haar', remove_max_ha
 	coeffs = pywt.wavedec2(pixels, mode, level = dwt_level)
 	dwt_low = coeffs[0]
 
-	# Subsitract median and compute hash
+	# Substract median and compute hash
 	med = numpy.median(dwt_low)
 	diff = dwt_low > med
 	return ImageHash(diff)
