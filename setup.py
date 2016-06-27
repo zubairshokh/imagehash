@@ -9,7 +9,7 @@ with open('README.rst') as f:
 
 setup(
     name='ImageHash',
-    version='1.0',
+    version='2.0',
     author='Johannes Buchner',
     author_email='buchner.johannes@gmx.at',
     packages=['imagehash'],
@@ -19,9 +19,10 @@ setup(
     description='Image Hashing library',
     long_description=long_description,
     install_requires=[
-        "scipy",
         "numpy",
-        "pillow", # or PIL
+        "scipy",       # for phash
+        "pillow",      # or PIL
+        "PyWavelets",  # for whash
     ],
 )
 

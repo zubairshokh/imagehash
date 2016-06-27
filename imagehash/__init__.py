@@ -165,6 +165,8 @@ def dhash(image, hash_size=8):
 def whash(image, hash_size = 8, image_scale = None, mode = 'haar', remove_max_haar_ll = True):
 	"""
 	Wavelet Hash computation.
+	
+	based on https://www.kaggle.com/c/avito-duplicate-ads-detection/
 
 	@image must be a PIL instance.
 	@hash_size must be a power of 2 and less than @image_scale.
@@ -176,7 +178,7 @@ def whash(image, hash_size = 8, image_scale = None, mode = 'haar', remove_max_ha
 	@remove_max_haar_ll - remove the lowest low level (LL) frequency using Haar wavelet.
 	"""
 
-	if image_scale != None:
+	if image_scale is not None:
 		assert image_scale == int(2**image_scale), "image_scale is not power of 2"
 	else:
 		image_scale = 2**int(numpy.log2(min(image.size)))
@@ -206,3 +208,4 @@ def whash(image, hash_size = 8, image_scale = None, mode = 'haar', remove_max_ha
 	med = numpy.median(dwt_low)
 	diff = dwt_low > med
 	return ImageHash(diff)
+

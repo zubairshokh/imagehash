@@ -26,14 +26,16 @@ def find_similar_images(userpath, hashfunc = imagehash.average_hash):
 if __name__ == '__main__':
     import sys, os
     def usage():
-    	sys.stderr.write("""SYNOPSIS: %s [ahash|phash|dhash] [<directory>]
+    	sys.stderr.write("""SYNOPSIS: %s [ahash|phash|dhash|...] [<directory>]
 
 Identifies similar images in the directory.
 
 Method: 
-  ahash: Average hash
-  phash: Perceptual hash
-  dhash: Difference hash
+  ahash:      Average hash
+  phash:      Perceptual hash
+  dhash:      Difference hash
+  whash-haar: Haar wavelet hash
+  whash-db4:  Daubechies wavelet hash
 
 (C) Johannes Buchner, 2013
 """ % sys.argv[0])
@@ -46,6 +48,10 @@ Method:
     	hashfunc = imagehash.phash
     elif hashmethod == 'dhash':
     	hashfunc = imagehash.dhash
+    elif hashmethod == 'whash-haar':
+    	hashfunc = imagehash.whash
+    elif hashmethod == 'whash-db4':
+    	hashfunc = lambda img: imagehash.whash(img, mode='db4')
     else:
     	usage()
     userpath = sys.argv[2] if len(sys.argv) > 2 else "."
