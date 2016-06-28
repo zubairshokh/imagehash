@@ -32,8 +32,8 @@ Rotation by 26: 21 Hamming difference
 
 from PIL import Image
 import numpy
-import scipy.fftpack
-import pywt
+#import scipy.fftpack
+#import pywt
 
 def _binary_array_to_hex(arr):
 	"""
@@ -121,6 +121,7 @@ def phash(image, hash_size=8, highfreq_factor=4):
 
 	@image must be a PIL instance.
 	"""
+	import scipy.fftpack
 	img_size = hash_size * highfreq_factor
 	image = image.convert("L").resize((img_size, img_size), Image.ANTIALIAS)
 	pixels = numpy.array(image.getdata(), dtype=numpy.float).reshape((img_size, img_size))
@@ -138,6 +139,7 @@ def phash_simple(image, hash_size=8, highfreq_factor=4):
 
 	@image must be a PIL instance.
 	"""
+	import scipy.fftpack
 	img_size = hash_size * highfreq_factor
 	image = image.convert("L").resize((img_size, img_size), Image.ANTIALIAS)
 	pixels = numpy.array(image.getdata(), dtype=numpy.float).reshape((img_size, img_size))
@@ -177,7 +179,7 @@ def whash(image, hash_size = 8, image_scale = None, mode = 'haar', remove_max_ha
 		'db4' - Daubechies wavelets
 	@remove_max_haar_ll - remove the lowest low level (LL) frequency using Haar wavelet.
 	"""
-
+	import pywt
 	if image_scale is not None:
 		assert image_scale == int(2**image_scale), "image_scale is not power of 2"
 	else:
