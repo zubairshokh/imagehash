@@ -40,4 +40,15 @@ Source hosted at github: https://github.com/JohannesBuchner/imagehash
 .. _wHash: https://fullstackml.com/2016/07/02/wavelet-image-hash-in-python/
 .. _pypi: https://pypi.python.org/pypi/ImageHash
 
+Changelog
+----------
+
+* 3.0: dhash had a bug: It computed pixel differences vertically, not horizontally.
+       I modified it to follow `dHash`_. The old function is available as dhash_vertical.
+
+* 2.0: added whash
+
+* 1.0: initial ahash, dhash, phash implementations.
+
+
 

@@ -154,6 +154,24 @@ def dhash(image, hash_size=8):
 	Difference Hash computation.
 
 	following http://www.hackerfactor.com/blog/index.php?/archives/529-Kind-of-Like-That.html
+	
+	computes differences horizontally
+
+	@image must be a PIL instance.
+	"""
+	image = image.convert("L").resize((hash_size, hash_size + 1), Image.ANTIALIAS)
+	pixels = numpy.array(image.getdata(), dtype=numpy.float).reshape((hash_size + 1, hash_size))
+	# compute differences
+	diff = pixels[:, 1:] > pixels[:, :-1]
+	return ImageHash(diff)
+
+def dhash_vertical(image, hash_size=8):
+	"""
+	Difference Hash computation.
+
+	following http://www.hackerfactor.com/blog/index.php?/archives/529-Kind-of-Like-That.html
+
+	computes differences vertically
 
 	@image must be a PIL instance.
 	"""
