@@ -159,9 +159,10 @@ def dhash(image, hash_size=8):
 
 	@image must be a PIL instance.
 	"""
-	image = image.convert("L").resize((hash_size, hash_size + 1), Image.ANTIALIAS)
+	# resize(w, h), but numpy.array((h, w))
+	image = image.convert("L").resize((hash_size + 1, hash_size), Image.ANTIALIAS)
 	pixels = numpy.array(image.getdata(), dtype=numpy.float).reshape((hash_size, hash_size + 1))
-	# compute differences
+	# compute differences between columns
 	diff = pixels[:, 1:] > pixels[:, :-1]
 	return ImageHash(diff)
 
@@ -175,9 +176,10 @@ def dhash_vertical(image, hash_size=8):
 
 	@image must be a PIL instance.
 	"""
-	image = image.convert("L").resize((hash_size + 1, hash_size), Image.ANTIALIAS)
+	# resize(w, h), but numpy.array((h, w))
+	image = image.convert("L").resize((hash_size, hash_size + 1), Image.ANTIALIAS)
 	pixels = numpy.array(image.getdata(), dtype=numpy.float).reshape((hash_size + 1, hash_size))
-	# compute differences
+	# compute differences between rows
 	diff = pixels[1:, :] > pixels[:-1, :]
 	return ImageHash(diff)
 
