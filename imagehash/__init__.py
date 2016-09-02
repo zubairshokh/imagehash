@@ -160,7 +160,7 @@ def dhash(image, hash_size=8):
 	@image must be a PIL instance.
 	"""
 	image = image.convert("L").resize((hash_size, hash_size + 1), Image.ANTIALIAS)
-	pixels = numpy.array(image.getdata(), dtype=numpy.float).reshape((hash_size + 1, hash_size))
+	pixels = numpy.array(image.getdata(), dtype=numpy.float).reshape((hash_size, hash_size + 1))
 	# compute differences
 	diff = pixels[:, 1:] > pixels[:, :-1]
 	return ImageHash(diff)
