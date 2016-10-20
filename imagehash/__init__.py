@@ -29,11 +29,13 @@ Rotation by 26: 21 Hamming difference
 >>>
 
 """
+from __future__ import (absolute_import, division, print_function)
 
 from PIL import Image
 import numpy
 #import scipy.fftpack
 #import pywt
+
 
 def _binary_array_to_hex(arr):
 	"""
@@ -48,6 +50,7 @@ def _binary_array_to_hex(arr):
 			s.append(hex(h)[2:].rjust(2, '0'))
 			h = 0
 	return "".join(s)
+
 
 class ImageHash(object):
 	"""
@@ -83,19 +86,22 @@ class ImageHash(object):
 		# this returns a 8 bit integer, intentionally shortening the information
 		return sum([2**(i % 8) for i, v in enumerate(self.hash.flatten()) if v])
 
-def hex_to_hash(hexstr):
+
+def hex_to_hash(hexstr, hash_size=8):
 	"""
 	Convert a stored hash (hex, as retrieved from str(Imagehash))
 	back to a Imagehash object.
 	"""
-	l = []
-	if len(hexstr) != 16:
-		raise ValueError('The hex string has the wrong length')
-	for i in range(8):
-		h = hexstr[i*2:i*2+2]
-		v = int("0x" + h, 16)
-		l.append([v & 2**i > 0 for i in range(8)])
-	return ImageHash(numpy.array(l))
+        l = []
+        count = hash_size * (hash_size // 4)
+        if len(hexstr) != count:
+            emsg = 'Expected hex string size of {}.'
+            raise ValueError(emsg.format(count))
+        for i in range(count // 2):
+            h = hexstr[i*2:i*2+2]
+            v = int("0x" + h, 16)
+            l.append([v & 2**i > 0 for i in range(8)])
+        return ImageHash(numpy.array(l))
 
 
 def average_hash(image, hash_size=8):
@@ -112,6 +118,7 @@ def average_hash(image, hash_size=8):
 	diff = pixels > avg
 	# make a hash
 	return ImageHash(diff)
+
 
 def phash(image, hash_size=8, highfreq_factor=4):
 	"""
@@ -131,6 +138,7 @@ def phash(image, hash_size=8, highfreq_factor=4):
 	diff = dctlowfreq > med
 	return ImageHash(diff)
 
+
 def phash_simple(image, hash_size=8, highfreq_factor=4):
 	"""
 	Perceptual Hash computation.
@@ -149,6 +157,7 @@ def phash_simple(image, hash_size=8, highfreq_factor=4):
 	diff = dctlowfreq > avg
 	return ImageHash(diff)
 
+
 def dhash(image, hash_size=8):
 	"""
 	Difference Hash computation.
@@ -165,6 +174,7 @@ def dhash(image, hash_size=8):
 	# compute differences between columns
 	diff = pixels[:, 1:] > pixels[:, :-1]
 	return ImageHash(diff)
+
 
 def dhash_vertical(image, hash_size=8):
 	"""
