@@ -6,23 +6,17 @@ try:
 except ImportError:
     from distutils.core import setup
 
-
 long_description = ""
 with open('README.rst') as f:
     long_description = f.read()
 
-package_data = {
-    'imagehash': [os.path.join('tests', 'data', '*')]
-}
-
-
-setup_args = dict(
+setup(
     name='ImageHash',
     version='3.0',
     author='Johannes Buchner',
     author_email='buchner.johannes@gmx.at',
     packages=['imagehash', 'imagehash.tests'],
-    package_data=package_data,
+    package_data={'imagehash': [os.path.join('tests', 'data', '*')]},
     scripts=['find_similar_images.py'],
     url='https://github.com/JohannesBuchner/imagehash',
     license='LICENSE',
@@ -36,7 +30,3 @@ setup_args = dict(
     ],
     test_suite='imagehash.tests'
 )
-
-
-if __name__ == '__main__':
-    setup(**setup_args)
