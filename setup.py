@@ -1,3 +1,6 @@
+import os
+import os.path
+
 try:
     from setuptools import setup
 except ImportError:
@@ -12,7 +15,8 @@ setup(
     version='3.0',
     author='Johannes Buchner',
     author_email='buchner.johannes@gmx.at',
-    packages=['imagehash'],
+    packages=['imagehash', 'imagehash.tests'],
+    package_data={'imagehash': [os.path.join('tests', 'data', '*')]},
     scripts=['find_similar_images.py'],
     url='https://github.com/JohannesBuchner/imagehash',
     license='LICENSE',
@@ -24,5 +28,5 @@ setup(
         "pillow",      # or PIL
         "PyWavelets",  # for whash
     ],
+    test_suite='imagehash.tests'
 )
-
