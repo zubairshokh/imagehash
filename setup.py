@@ -11,14 +11,14 @@ with open('README.rst') as f:
 
 setup(
     name='ImageHash',
-    version='3.0',
+    version='3.1',
     author='Johannes Buchner',
     author_email='buchner.johannes@gmx.at',
     packages=['imagehash', 'imagehash.tests'],
     package_data={'imagehash': [os.path.join('tests', 'data', '*')]},
     scripts=['find_similar_images.py'],
     url='https://github.com/JohannesBuchner/imagehash',
-    license='LICENSE',
+    license='BSD 2-clause (see LICENSE file)',
     description='Image Hashing library',
     long_description=long_description,
     install_requires=[
