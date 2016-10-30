@@ -1,6 +1,8 @@
 ImageHash
 ===========
 
+|Travis|_ |Coveralls|_
+
 A image hashing library written in Python. ImageHash supports:
 
 * average hashing (`aHash`_)
@@ -51,4 +53,8 @@ Changelog
 * 1.0: initial ahash, dhash, phash implementations.
 
 
+.. |Travis| image:: https://travis-ci.org/JohannesBuchner/imagehash.svg?branch=master
+.. _Travis: https://travis-ci.org/JohannesBuchner/imagehash
 
+.. |Coveralls| image:: https://coveralls.io/repos/github/JohannesBuchner/imagehash/badge.svg
+.. _Coveralls: https://coveralls.io/github/JohannesBuchner/imagehash
