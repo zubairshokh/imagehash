@@ -22,6 +22,7 @@ setup(
     description='Image Hashing library',
     long_description=long_description,
     install_requires=[
+        "six",
         "numpy",
         "scipy",       # for phash
         "pillow",      # or PIL
