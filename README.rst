@@ -1,14 +1,14 @@
 ImageHash
 ===========
 
-|Travis|_ |Coveralls|_
-
 A image hashing library written in Python. ImageHash supports:
 
 * average hashing (`aHash`_)
 * perception hashing (`pHash`_)
 * difference hashing (`dHash`_)
 * wavelet hashing (`wHash`_)
+
+|Travis|_ |Coveralls|_
 
 Requirements
 -------------
