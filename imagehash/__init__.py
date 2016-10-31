@@ -35,7 +35,9 @@ from PIL import Image
 import numpy
 #import scipy.fftpack
 #import pywt
-
+import os.path
+__version__ = open(os.path.join(os.path.abspath(
+	os.path.dirname(__file__)), 'VERSION')).read().strip()
 
 def _binary_array_to_hex(arr):
 	"""
