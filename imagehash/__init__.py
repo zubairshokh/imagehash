@@ -72,7 +72,7 @@ class ImageHash(object):
 			raise TypeError('Other hash must not be None.')
 		if self.hash.size != other.hash.size:
 			raise TypeError('ImageHashes must be of the same shape.', self.hash.shape, other.hash.shape)
-		return (self.hash.flatten() != other.hash.flatten()).sum()
+		return numpy.count_nonzero(self.hash != other.hash)
 
 	def __eq__(self, other):
 		if other is None:
