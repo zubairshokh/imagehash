@@ -41,7 +41,12 @@ __version__ = open(os.path.join(os.path.abspath(
 
 def _binary_array_to_hex(arr):
 	"""
-	internal function to make a hex string out of a binary array
+	internal function to make a hex string out of a binary array.
+
+	binary array might be created from comparison - for example, in 
+	average hash, each pixel in the image is compared with the average pixel value. 
+	If the pixel’s value is less than the average it gets a 0 and if it’s more it gets a 1. 
+	Then we treat this like a string of bits and convert it to hexadecimal.
 	"""
 	h = 0
 	s = []
@@ -112,11 +117,19 @@ def average_hash(image, hash_size=8):
 
 	Implementation follows http://www.hackerfactor.com/blog/index.php?/archives/432-Looks-Like-It.html
 
+	Step by step explanation: https://www.safaribooksonline.com/blog/2013/11/26/image-hashing-with-python/
+
 	@image must be a PIL instance.
 	"""
+
+	# reduce size and complexity, then covert to grayscale
 	image = image.convert("L").resize((hash_size, hash_size), Image.ANTIALIAS)
+
+	# find average pixel value; 'pixels' is an array of the pixel values, ranging from 0 (black) to 255 (white)
 	pixels = numpy.array(image.getdata()).reshape((hash_size, hash_size))
 	avg = pixels.mean()
+
+	# create string of bits
 	diff = pixels > avg
 	# make a hash
 	return ImageHash(diff)
