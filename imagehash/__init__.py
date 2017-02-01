@@ -45,7 +45,7 @@ def _binary_array_to_hex(arr):
 
 	binary array might be created from comparison - for example, in 
 	average hash, each pixel in the image is compared with the average pixel value. 
-	If the pixel’s value is less than the average it gets a 0 and if it’s more it gets a 1. 
+	If the pixel's value is less than the average it gets a 0 and if it's more it gets a 1.
 	Then we treat this like a string of bits and convert it to hexadecimal.
 	"""
 	h = 0
