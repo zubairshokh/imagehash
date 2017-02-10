@@ -40,9 +40,9 @@ Method:
   whash-haar: Haar wavelet hash
   whash-db4:  Daubechies wavelet hash
 
-(C) Johannes Buchner, 2013
+(C) Johannes Buchner, 2013-2017
 """ % sys.argv[0])
-         sys.exit(1)
+        sys.exit(1)
     
     hashmethod = sys.argv[1] if len(sys.argv) > 1 else usage()
     if hashmethod == 'ahash':
