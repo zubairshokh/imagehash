@@ -6,3 +6,4 @@ build
 dist
 ImageHash.egg-info/
 .eggs
+.DS_Store
