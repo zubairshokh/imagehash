@@ -45,7 +45,7 @@ def _binary_array_to_hex(arr):
 
 	binary array might be created from comparison - for example, in 
 	average hash, each pixel in the image is compared with the average pixel value. 
-	If the pixel’s value is less than the average it gets a 0 and if it’s more it gets a 1. 
+	If the pixel's value is less than the average it gets a 0 and if it's more it gets a 1.
 	Then we treat this like a string of bits and convert it to hexadecimal.
 	"""
 	h = 0
@@ -228,7 +228,9 @@ def whash(image, hash_size = 8, image_scale = None, mode = 'haar', remove_max_ha
 	if image_scale is not None:
 		assert image_scale & (image_scale - 1) == 0, "image_scale is not power of 2"
 	else:
-		image_scale = 2**int(numpy.log2(min(image.size)))
+		image_natural_scale = 2**int(numpy.log2(min(image.size)))
+		image_scale = max(image_natural_scale, hash_size)
+
 	ll_max_level = int(numpy.log2(image_scale))
 
 	level = int(numpy.log2(hash_size))

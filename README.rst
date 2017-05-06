@@ -51,6 +51,8 @@ Source hosted at github: https://github.com/JohannesBuchner/imagehash
 Changelog
 ----------
 
+* 3.2: whash now also handles smaller-than-hash images
+
 * 3.0: dhash had a bug: It computed pixel differences vertically, not horizontally.
        I modified it to follow `dHash`_. The old function is available as dhash_vertical.
 
