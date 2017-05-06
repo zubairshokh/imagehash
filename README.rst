@@ -10,6 +10,12 @@ A image hashing library written in Python. ImageHash supports:
 
 |Travis|_ |Coveralls|_
 
+Rationale
+---------
+Why can’t we use md5, sha-1, etc.?
+
+Unfortunately, we cannot use cryptographic hashing algorithms in our implementation. Due to the nature of cryptographic hashing algorithms, very tiny changes in the input file will result in a substantially different hash. In the case of image fingerprinting, we actually want our similar inputs to have similar output hashes as well.
+
 Requirements
 -------------
 Based on PIL/Pillow Image, numpy and scipy.fftpack (for pHash)
