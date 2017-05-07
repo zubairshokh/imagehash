@@ -121,6 +121,8 @@ def average_hash(image, hash_size=8):
 
 	@image must be a PIL instance.
 	"""
+	if hash_size < 0:
+		raise ValueError("Hash size must be positive")
 
 	# reduce size and complexity, then covert to grayscale
 	image = image.convert("L").resize((hash_size, hash_size), Image.ANTIALIAS)
@@ -143,6 +145,9 @@ def phash(image, hash_size=8, highfreq_factor=4):
 
 	@image must be a PIL instance.
 	"""
+	if hash_size < 0:
+		raise ValueError("Hash size must be positive")
+
 	import scipy.fftpack
 	img_size = hash_size * highfreq_factor
 	image = image.convert("L").resize((img_size, img_size), Image.ANTIALIAS)
@@ -162,6 +167,9 @@ def phash_simple(image, hash_size=8, highfreq_factor=4):
 
 	@image must be a PIL instance.
 	"""
+	if hash_size < 0:
+		raise ValueError("Hash size must be positive")
+
 	import scipy.fftpack
 	img_size = hash_size * highfreq_factor
 	image = image.convert("L").resize((img_size, img_size), Image.ANTIALIAS)
@@ -184,6 +192,9 @@ def dhash(image, hash_size=8):
 	@image must be a PIL instance.
 	"""
 	# resize(w, h), but numpy.array((h, w))
+	if hash_size < 0:
+		raise ValueError("Hash size must be positive")
+
 	image = image.convert("L").resize((hash_size + 1, hash_size), Image.ANTIALIAS)
 	pixels = numpy.array(image.getdata(), dtype=numpy.float).reshape((hash_size, hash_size + 1))
 	# compute differences between columns
@@ -201,6 +212,9 @@ def dhash_vertical(image, hash_size=8):
 
 	@image must be a PIL instance.
 	"""
+	if hash_size < 0:
+		raise ValueError("Hash size must be positive")
+
 	# resize(w, h), but numpy.array((h, w))
 	image = image.convert("L").resize((hash_size, hash_size + 1), Image.ANTIALIAS)
 	pixels = numpy.array(image.getdata(), dtype=numpy.float).reshape((hash_size + 1, hash_size))
@@ -224,6 +238,9 @@ def whash(image, hash_size = 8, image_scale = None, mode = 'haar', remove_max_ha
 		'db4' - Daubechies wavelets
 	@remove_max_haar_ll - remove the lowest low level (LL) frequency using Haar wavelet.
 	"""
+	if hash_size < 0:
+		raise ValueError("Hash size must be positive")
+		
 	import pywt
 	if image_scale is not None:
 		assert image_scale & (image_scale - 1) == 0, "image_scale is not power of 2"
