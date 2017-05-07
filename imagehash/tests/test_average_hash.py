@@ -21,6 +21,10 @@ class Test(tests.TestImageHash):
     def test_average_hash_stored(self):
         self.check_hash_stored(self.func, self.image)
 
+    def test_average_hash_size(self):
+        self.check_hash_size(self.func, self.image, -1)
+
+
 
 if __name__ == '__main__':
     unittest.main()
