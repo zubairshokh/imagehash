@@ -238,9 +238,6 @@ def whash(image, hash_size = 8, image_scale = None, mode = 'haar', remove_max_ha
 		'db4' - Daubechies wavelets
 	@remove_max_haar_ll - remove the lowest low level (LL) frequency using Haar wavelet.
 	"""
-	if hash_size < 0:
-		raise ValueError("Hash size must be positive")
-		
 	import pywt
 	if image_scale is not None:
 		assert image_scale & (image_scale - 1) == 0, "image_scale is not power of 2"
