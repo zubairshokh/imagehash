@@ -167,9 +167,6 @@ def phash_simple(image, hash_size=8, highfreq_factor=4):
 
 	@image must be a PIL instance.
 	"""
-	if hash_size < 0:
-		raise ValueError("Hash size must be positive")
-
 	import scipy.fftpack
 	img_size = hash_size * highfreq_factor
 	image = image.convert("L").resize((img_size, img_size), Image.ANTIALIAS)
@@ -212,9 +209,6 @@ def dhash_vertical(image, hash_size=8):
 
 	@image must be a PIL instance.
 	"""
-	if hash_size < 0:
-		raise ValueError("Hash size must be positive")
-
 	# resize(w, h), but numpy.array((h, w))
 	image = image.convert("L").resize((hash_size, hash_size + 1), Image.ANTIALIAS)
 	pixels = numpy.array(image.getdata(), dtype=numpy.float).reshape((hash_size + 1, hash_size))
