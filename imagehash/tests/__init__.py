@@ -58,3 +58,7 @@ class TestImageHash(unittest.TestCase):
                 '- stringified hash {}'.format(distance, image_hash,
                                                other_hash))
         self.assertEqual(distance, 0, emsg)
+
+    def check_hash_size(self, func, image, size):
+        with self.assertRaises(ValueError):
+            func(image, -1)

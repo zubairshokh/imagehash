@@ -57,6 +57,5 @@ class Test(unittest.TestCase):
             with six.assertRaisesRegex(self, AssertionError, emsg):
                 imagehash.whash(self.image, image_scale=image_scale+1)
 
-
 if __name__ == '__main__':
     unittest.main()
