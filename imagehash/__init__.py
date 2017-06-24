@@ -247,8 +247,7 @@ def whash(image, hash_size = 8, image_scale = None, mode = 'haar', remove_max_ha
 	dwt_level = ll_max_level - level
 
 	image = image.convert("L").resize((image_scale, image_scale), Image.ANTIALIAS)
-	pixels = numpy.array(image.getdata(), dtype=numpy.float).reshape((image_scale, image_scale))
-	pixels /= 255
+	pixels = numpy.asarray(image) / 255
 
 	# Remove low level frequency LL(max_ll) if @remove_max_haar_ll using haar filter
 	if remove_max_haar_ll:
