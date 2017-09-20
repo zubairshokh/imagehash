@@ -51,6 +51,8 @@ Source hosted at github: https://github.com/JohannesBuchner/imagehash
 Changelog
 ----------
 
+* 3.5: image data handling speed-up
+
 * 3.2: whash now also handles smaller-than-hash images
 
 * 3.0: dhash had a bug: It computed pixel differences vertically, not horizontally.
