@@ -128,7 +128,7 @@ def average_hash(image, hash_size=8):
 	image = image.convert("L").resize((hash_size, hash_size), Image.ANTIALIAS)
 
 	# find average pixel value; 'pixels' is an array of the pixel values, ranging from 0 (black) to 255 (white)
-	pixels = numpy.array(image.getdata()).reshape((hash_size, hash_size))
+	pixels = numpy.asarray(image)
 	avg = pixels.mean()
 
 	# create string of bits
@@ -151,7 +151,7 @@ def phash(image, hash_size=8, highfreq_factor=4):
 	import scipy.fftpack
 	img_size = hash_size * highfreq_factor
 	image = image.convert("L").resize((img_size, img_size), Image.ANTIALIAS)
-	pixels = numpy.array(image.getdata(), dtype=numpy.float).reshape((img_size, img_size))
+	pixels = numpy.asarray(image)
 	dct = scipy.fftpack.dct(scipy.fftpack.dct(pixels, axis=0), axis=1)
 	dctlowfreq = dct[:hash_size, :hash_size]
 	med = numpy.median(dctlowfreq)
@@ -170,7 +170,7 @@ def phash_simple(image, hash_size=8, highfreq_factor=4):
 	import scipy.fftpack
 	img_size = hash_size * highfreq_factor
 	image = image.convert("L").resize((img_size, img_size), Image.ANTIALIAS)
-	pixels = numpy.array(image.getdata(), dtype=numpy.float).reshape((img_size, img_size))
+	pixels = numpy.asarray(image)
 	dct = scipy.fftpack.dct(pixels)
 	dctlowfreq = dct[:hash_size, 1:hash_size+1]
 	avg = dctlowfreq.mean()
@@ -193,7 +193,7 @@ def dhash(image, hash_size=8):
 		raise ValueError("Hash size must be positive")
 
 	image = image.convert("L").resize((hash_size + 1, hash_size), Image.ANTIALIAS)
-	pixels = numpy.array(image.getdata(), dtype=numpy.float).reshape((hash_size, hash_size + 1))
+	pixels = numpy.asarray(image)
 	# compute differences between columns
 	diff = pixels[:, 1:] > pixels[:, :-1]
 	return ImageHash(diff)
@@ -211,7 +211,7 @@ def dhash_vertical(image, hash_size=8):
 	"""
 	# resize(w, h), but numpy.array((h, w))
 	image = image.convert("L").resize((hash_size, hash_size + 1), Image.ANTIALIAS)
-	pixels = numpy.array(image.getdata(), dtype=numpy.float).reshape((hash_size + 1, hash_size))
+	pixels = numpy.asarray(image)
 	# compute differences between rows
 	diff = pixels[1:, :] > pixels[:-1, :]
 	return ImageHash(diff)
@@ -247,8 +247,7 @@ def whash(image, hash_size = 8, image_scale = None, mode = 'haar', remove_max_ha
 	dwt_level = ll_max_level - level
 
 	image = image.convert("L").resize((image_scale, image_scale), Image.ANTIALIAS)
-	pixels = numpy.array(image.getdata(), dtype=numpy.float).reshape((image_scale, image_scale))
-	pixels /= 255
+	pixels = numpy.asarray(image) / 255
 
 	# Remove low level frequency LL(max_ll) if @remove_max_haar_ll using haar filter
 	if remove_max_haar_ll:
