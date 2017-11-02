@@ -22,7 +22,7 @@ class Test(tests.TestImageHash):
         self.check_hash_stored(self.func, self.image)
 
     def test_average_hash_size(self):
-        self.check_hash_size(self.func, self.image, -1)
+        self.check_hash_size(self.func, self.image)
 
 
 

@@ -60,7 +60,8 @@ class TestImageHash(unittest.TestCase):
                                                    other_hash))
             self.assertEqual(distance, 0, emsg)
 
-    def check_hash_size(self, func, image, size):
-        with self.assertRaises(ValueError):
-            func(image, -1)
+    def check_hash_size(self, func, image, sizes=range(-1,2)):
+        for hash_size in sizes:
+            with self.assertRaises(ValueError):
+                func(image, hash_size)
 
