@@ -16,7 +16,7 @@ class Test(tests.TestImageHash):
         self.check_hash_algorithm(self.func, self.image)
 
     def test_average_hash_length(self):
-        self.check_hash_length(self.func, self.image, [8, 20])
+        self.check_hash_length(self.func, self.image)
 
     def test_average_hash_stored(self):
         self.check_hash_stored(self.func, self.image)
