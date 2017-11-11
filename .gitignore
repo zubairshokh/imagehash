@@ -7,3 +7,4 @@ dist
 ImageHash.egg-info/
 .eggs
 .DS_Store
+.python-version
