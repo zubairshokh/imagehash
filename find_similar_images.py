@@ -8,22 +8,31 @@ import imagehash
 """
 Demo of hashing
 """
-def find_similar_images(userpath, hashfunc = imagehash.average_hash):
+def find_similar_images(userpaths, hashfunc = imagehash.average_hash):
     import os
     def is_image(filename):
         f = filename.lower()
         return f.endswith(".png") or f.endswith(".jpg") or \
-            f.endswith(".jpeg") or f.endswith(".bmp") or f.endswith(".gif")
+            f.endswith(".jpeg") or f.endswith(".bmp") or f.endswith(".gif") or '.jpg' in f
     
-    image_filenames = [os.path.join(userpath, path) for path in os.listdir(userpath) if is_image(path)]
+    image_filenames = []
+    for userpath in userpaths:
+        image_filenames += [os.path.join(userpath, path) for path in os.listdir(userpath) if is_image(path)]
     images = {}
     for img in sorted(image_filenames):
-        hash = hashfunc(Image.open(img))
+        try:
+            hash = hashfunc(Image.open(img))
+        except Exception as e:
+            print('Problem:', e, 'with', img)
+        if hash in images:
+            print(img, '  already exists as', ' '.join(images[hash]))
+            if 'dupPictures' in img:
+                print('rm -v', img)
         images[hash] = images.get(hash, []) + [img]
     
-    for k, img_list in six.iteritems(images):
-        if len(img_list) > 1:
-            print(" ".join(img_list))
+    #for k, img_list in six.iteritems(images):
+    #    if len(img_list) > 1:
+    #        print(" ".join(img_list))
 
 
 if __name__ == '__main__':
@@ -57,7 +66,7 @@ Method:
         hashfunc = lambda img: imagehash.whash(img, mode='db4')
     else:
         usage()
-    userpath = sys.argv[2] if len(sys.argv) > 2 else "."
-    find_similar_images(userpath=userpath, hashfunc=hashfunc)
+    userpaths = sys.argv[2:] if len(sys.argv) > 2 else "."
+    find_similar_images(userpaths=userpaths, hashfunc=hashfunc)
     
 
