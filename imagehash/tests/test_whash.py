@@ -5,6 +5,23 @@ import six
 import unittest
 
 import imagehash
+import imagehash.tests as tests
+
+
+class TestBasic(tests.TestImageHash):
+
+    def setUp(self):
+        self.image = self.get_data_image()
+        self.func = imagehash.whash
+
+    def test_whash(self):
+        self.check_hash_algorithm(self.func, self.image)
+
+    def test_whash_length(self):
+        self.check_hash_length(self.func, self.image, sizes=[2,4,8,16,32,64])
+
+    def test_whash_stored(self):
+        self.check_hash_stored(self.func, self.image, sizes=[2,4,8,16,32,64])
 
 
 class Test(unittest.TestCase):
@@ -56,6 +73,7 @@ class Test(unittest.TestCase):
         for image_scale in [4, 8, 16]:
             with six.assertRaisesRegex(self, AssertionError, emsg):
                 imagehash.whash(self.image, image_scale=image_scale+1)
+
 
 if __name__ == '__main__':
     unittest.main()

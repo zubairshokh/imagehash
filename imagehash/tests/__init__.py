@@ -41,24 +41,27 @@ class TestImageHash(unittest.TestCase):
                                        distance))
         self.assertTrue(distance > 10, emsg)
 
-    def check_hash_length(self, func, image, sizes):
+    def check_hash_length(self, func, image, sizes=range(2,21)):
         for hash_size in sizes:
             image_hash = func(image, hash_size=hash_size)
             emsg = 'hash_size={} is not respected'.format(hash_size)
             self.assertEqual(image_hash.hash.size, hash_size**2, emsg)
 
-    def check_hash_stored(self, func, image):
-        image_hash = func(image)
-        other_hash = imagehash.hex_to_hash(str(image_hash))
-        emsg = 'stringified hash {} != original hash {}'.format(other_hash,
-                                                                image_hash)
-        self.assertEqual(image_hash, other_hash, emsg)
-        distance = image_hash - other_hash
-        emsg = ('unexpected hamming distance {}: original hash {} '
-                '- stringified hash {}'.format(distance, image_hash,
-                                               other_hash))
-        self.assertEqual(distance, 0, emsg)
+    def check_hash_stored(self, func, image, sizes=range(2,21)):
+        for hash_size in sizes:
+            image_hash = func(image, hash_size)
+            other_hash = imagehash.hex_to_hash(str(image_hash))
+            emsg = 'stringified hash {} != original hash {}'.format(other_hash,
+                                                                    image_hash)
+            self.assertEqual(image_hash, other_hash, emsg)
+            distance = image_hash - other_hash
+            emsg = ('unexpected hamming distance {}: original hash {} '
+                    '- stringified hash {}'.format(distance, image_hash,
+                                                   other_hash))
+            self.assertEqual(distance, 0, emsg)
 
-    def check_hash_size(self, func, image, size):
-        with self.assertRaises(ValueError):
-            func(image, -1)
+    def check_hash_size(self, func, image, sizes=range(-1,2)):
+        for hash_size in sizes:
+            with self.assertRaises(ValueError):
+                func(image, hash_size)
+
