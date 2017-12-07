@@ -51,6 +51,8 @@ Source hosted at github: https://github.com/JohannesBuchner/imagehash
 Changelog
 ----------
 
+* 4.0: Changed binary to hex implementation, because the previous one was broken for various hash sizes. This change breaks compatibility to previously stored hashes; to convert them from the old encoding, use the "old_hex_to_hash" function.
+
 * 3.5: image data handling speed-up
 
 * 3.2: whash now also handles smaller-than-hash images
