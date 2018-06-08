@@ -5,10 +5,10 @@ import six
 
 import imagehash
 
-def generate_phash(image_path, hashsize = 8, hashfunc = imagehash.phash, freqfactor = 4, expose_image = False):
+def generate_phash(image_path, hashsize = 8, expose_image = False, hashfunc = imagehash.phash, freqfactor = 4):
     if expose_image:
         export_image(image_path, hashsize, freqfactor)
-    
+            
     hash = hashfunc(Image.open(image_path), hashsize, freqfactor)
     return str(hash)
 
@@ -22,15 +22,16 @@ def generate_ahash(image_path, hashsize = 8, hashfunc = imagehash.average_hash):
     return str(hash)
     
 def export_image(image_path, hashsize, freqfactor):
-    import os, sys
-    name = os.path.basename(image_path)
-    image = Image.open(image_path)
+    import os
+
+    tail = os.path.basename(image_path)
+    image_opened = Image.open(image_path)
     img_size = hashsize * freqfactor
-    image = image.convert("L").resize((img_size, img_size), Image.ANTIALIAS)
+    image_converted = image_opened.convert("L").resize((img_size, img_size), Image.ANTIALIAS)
     try:
-        os.mkdir("../hashed_images")
+        os.mkdir("priv/hashed_images")
     except FileExistsError:
         pass
     
-    image.save("../hashed_images/%s" % name)
+    image_converted.save("priv/hashed_images/{0}".format(tail.decode('utf-8')), "PNG")
     return None
