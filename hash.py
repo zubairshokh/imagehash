@@ -29,7 +29,7 @@ def export_image(image_path, hashsize, freqfactor):
     img_size = hashsize * freqfactor
     image_converted = image_opened.convert("L").resize((img_size, img_size), Image.ANTIALIAS)
     try:
-        os.mkdir("priv/hashed_images")
+        os.makedirs("priv/hashed_images")
     except FileExistsError:
         pass
     
